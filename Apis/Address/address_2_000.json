@@ -84,43 +84,22 @@
                         "type":"string",
                         "description":"Informações complementares do endereço"
                     },
-                    "city":{
-                        "type":"object",
-                        "properties":{
-                            "items":{
-                                "type":"array",
-                                "items":{
-                                    "$ref":"https://raw.githubusercontent.com/renatocunha/Apis/master/Apis/Address/city_2_000.json#/components/schemas/CitiesInfo"
-                               }    
-                            } 
-                        }
+                    "city": {
+                    "type": "object",
+                                    "$ref": "https://raw.githubusercontent.com/renatocunha/Apis/master/Apis/Address/city_2_000.json#/components/schemas/CitiesInfo"
                     },
                     "district":{
                         "type":"string",
                         "description":"Bairro",
                         "example":"Casa Verde"
                     },
-                    "state":{
-                        "type":"object",
-                        "properties":{
-                            "items":{
-                                "type":"array",
-                                "items":{
-                                    "$ref":"https://raw.githubusercontent.com/renatocunha/Apis/master/Apis/Address/state_1_000.json#/components/schemas/StatesInfo"
-                               }    
-                            } 
-                        }
+                    "state": {
+                                    "type": "object",
+                                    "$ref": "https://raw.githubusercontent.com/renatocunha/Apis/master/Apis/Address/state_1_000.json#/components/schemas/StatesInfo"
                     },
-                    "country":{
-                        "type":"object",
-                        "properties":{
-                            "items":{
-                                "type":"array",
-                                "items":{
-                                    "$ref":"https://raw.githubusercontent.com/renatocunha/Apis/master/Apis/Address/country_1_000.json#/components/schemas/CountriesInfo"
-                               }    
-                            } 
-                        }
+                    "country": {
+                                    "type": "object",
+                                    "$ref": "https://raw.githubusercontent.com/renatocunha/Apis/master/Apis/Address/country_1_000.json#/components/schemas/CountriesInfo"
                     },
                     "zipCode":{
                         "type":"string",
