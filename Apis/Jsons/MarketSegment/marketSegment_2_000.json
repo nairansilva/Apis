@@ -1,0 +1,597 @@
+{
+    "openapi": "3.0.1",
+    "servers": [
+        {
+            "description": "API para cadastro de Segmentos nos produtos TOTVS",
+            "url": "api.totvs.com.br"
+        }
+    ],
+    "info":{
+        "description": "API para cadastro de Segmentos nos produtos TOTVS",
+        "version": "2.000",
+        "title": "marketSegment",
+        "contact":{
+            "name": "T-Talk",
+            "url": "api.totvs.com.br",
+            "email": "comiteintegracao@totvs.com.br"
+        },
+        "x-totvs":{
+            "messageDocumentation":{
+                "name": "marketSegment",
+                "description": "Cadastro de Segmento",
+                "segment": "Services"
+            },
+            "productInformation":{
+                "protheus":{
+                    "contact": "squad.crm@totvs.com.br",
+                    "description": "Cadastro de Segmentos",
+                    "adapter": "crms610.prw"
+                }
+            }
+        }
+    },
+    "paths":{
+        "/marketSegment":{
+            "get":{
+                "tags": [
+                    "marketSegment"
+                ],
+                "summary": "Retorna todos Segmentos",
+                "x-totvs":{
+                    "productInformation":{
+                        "protheus":{
+                            "available": true,
+                            "note": "Este verbo está disponível com todos os parâmetros",
+                            "minimalVersion": "12.1.21"
+                        }
+                    }
+                },
+                "description": "Retorna todos Segmentos",
+                "operationId": "getmarketSegment",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/Authorization"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Order"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/PageSize"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Operação realizada com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/components/schemas/PagedMarketSegments"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Segmentos não localizados na base!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ErrorDetails"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
+        "/marketSegment/{marketSegmentId}":{
+            "get":{
+                "tags": [
+                    "marketSegment"
+                ],
+                "summary": "Retorna Segmento",
+                "description": "Retorna  Segmento com base em seu Código",
+                "operationId": "getmarketSegmentId",
+                "x-totvs":{
+                    "productInformation":{
+                        "protheus":{
+                            "available": true,
+                            "note": "Este verbo está disponível com os parâmetros Authorization e MarketSegmentId",
+                            "minimalVersion": "12.1.21"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/MarketSegmentId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Authorization"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Operação realizada com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/components/schemas/PagedMarketSegments"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "Segmento não localizado na base!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ErrorDetails"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "post":{
+                "tags": [
+                    "marketSegment"
+                ],
+                "summary": "Inclui Segmento enviado na requisição",
+                "description": "Inclui segmento passado na requisição",
+                "operationId": "postmarketSegmentId",
+                "x-totvs":{
+                    "productInformation":{
+                        "protheus":{
+                            "available": true,
+                            "note": "Este verbo está disponível com o parâmetros Authorization"
+                        }
+                    }
+                },
+
+                "parameters": [
+                    {
+                    "$ref": "#/components/parameters/Authorization"
+                    }
+                ],
+                "requestBody":{
+                    "description": "Entidade para ser incluida",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/MarketSegmentsInfo"
+                            }
+                        }
+                    }
+                    
+                },
+                "responses":{
+                    "200":{
+                        "description": "Operação realizada com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/components/schemas/PagedMarketSegments"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Erro no momento da inclusão!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ErrorDetails"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "put":{
+                "tags": [
+                    "marketSegment"
+                ],
+                "summary": "Atualiza registro de segmento passado na requisição",
+                "description": "Atualiza o segmento informado na requisição",
+                "operationId": "putmarketSegmentId",
+                "x-totvs":{
+                    "productInformation":{
+                        "protheus":{
+                            "available": true,
+                            "note": "Este verbo está disponível com os parâmetros authorization e MarketSegmentId",
+                            "minimalVersion": "12.1.21"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/MarketSegmentId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Authorization"
+                    }
+                ],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/MarketSegmentsInfo"
+                            }
+                        }
+                    },
+                    "description": "Entidade para ser Alterada"
+                },
+                "responses":{
+                    "200":{
+                    "description": "Operação realizada com sucesso!",
+                    "content":{
+                        "application/json":{
+                        "schema":{
+                            "$ref": "#/components/schemas/PagedMarketSegments"
+                        }
+                        }
+                    }
+                    },
+                    "400":{
+                        "description": "erro no momento da alteração!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ErrorDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "Entidade não localizada na base!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ErrorDetails"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            },
+            "delete":{
+                "tags": [
+                    "marketSegment"
+                ],
+                "summary": "Exclui o segmento passado na requisição",
+                "description": "Exclui o cadastro de segmento passada na requisição",
+                "operationId": "deletemarketSegmentId",
+                "x-totvs":{
+                    "productInformation":{
+                        "protheus":{
+                            "available": true,
+                            "note": "Este verbo está disponível com os parâmetros authorization e MarketSegmentId",
+                            "minimalVersion": "12.1.21"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                    "$ref": "#/components/parameters/MarketSegmentId"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Operação realizada com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/components/schemas/PagedMarketSegments"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "erro no momento da exclusão!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ErrorDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "Entidade não localizada na base!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ErrorDetails"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        }
+    },
+    "components":{
+        "parameters":{
+            "MarketSegmentId":{
+                "name": "marketSegmentId",
+                "in": "path",
+                "required": true,
+                "description": "Identificador único do segmento",
+                "schema":{
+                    "type": "string"
+                }
+            },
+            "Authorization":{
+                "name": "authorization",
+                "in": "header",
+                "required": false,
+                "description": "Cabeçalho usado para autorização das requisições",
+                "schema":{
+                    "type": "string"
+                }
+            },
+            "Order":{
+                "name": "order",
+                "in": "query",
+                "description": "Ordenação da Coleção",
+                "required": false,
+                "schema":{
+                    "type": "array",
+                    "items":{
+                        "type": "string"
+                    },
+                    "uniqueItems": true
+                }
+            },
+            "Page":{
+                "name": "page",
+                "in": "query",
+                "description": "Paginação da Coleção",
+                "required": false,
+                "schema":{
+                    "type": "integer",
+                    "format": "int32",
+                    "default": 1,
+                    "minimum": 1,
+                    "exclusiveMinimum": false
+                }
+            },
+            "PageSize":{
+                "name": "pageSize",
+                "in": "query",
+                "description": "Quantidade de Itens por página",
+                "required": false,
+                "schema":{
+                    "type": "integer",
+                    "format": "int32",
+                    "default": 20
+                }
+            }
+        },
+        "schemas":{
+            "PagedMarketSegments":{
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Paging"
+                    },
+                    {
+                        "$ref": "#/components/schemas/MarketSegments"
+                    }
+                ]
+            },
+            "MarketSegments":{
+                "type": "object",
+                "items":{
+                    "type": "array",
+                    "items":{
+                        "$ref": "#/components/schemas/MarketSegmentsInfo"
+                    }
+                }
+                
+            },
+            "MarketSegmentsInfo":{
+                "type": "object",
+                "properties":{
+                    "marketSegmentID":{
+                        "type": "string",
+                        "example": "000001",
+                        "description": "Código do Segmento",
+                        "x-totvs":{
+                            "protheus":{
+                                "Field": "AOV.AOV_CODSEG",
+                                "Required": true,
+                                "type": "Char",
+                                "length": "06",
+                                "avialable": true,
+                                "canUpdate": false
+                            }
+                        }
+                    },
+                    "branchId":{
+                        "type": "string",
+                        "example": "D MG 01",
+                        "description": "Filial",
+                        "x-totvs":{
+                            "protheus":{
+                                "field": "AOV.AOV_FILIAL",
+                                "required": true,
+                                "type": "Char",
+                                "length": "12",
+                                "avialable": true,
+                                "canUpdate": false
+                            }
+                        }
+                    },
+                    "companyId":{
+                        "type": "string",
+                        "description":"Empresa" 
+                    },
+                    "marketSegmentDescription":{
+                        "type": "string",
+                        "example": "Services",
+                        "description": "Descrição do Segmento",
+                        "x-totvs":{
+                            "protheus":{
+                                "Field": "AOV.AOV_DESSEG",
+                                "Required": true,
+                                "type": "Char",
+                                "length": "40",
+                                "avialable": true,
+                                "canUpdate": false
+                            }
+                        }
+                    },
+                    "mainMarketSegment":{
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Indica se é um segmento principal"
+                    },
+                    "parentMarketSegment":{
+                        "type": "string",
+                        "example": "000002",
+                        "description": "Segmento pai/superior",
+                        "x-totvs":{
+                            "protheus":{
+                                "field": "AOV.AOV_PAI",
+                                "required": false,
+                                "type": "Char",
+                                "length": "06",
+                                "avialable": true,
+                                "canUpdate": true
+                            }
+                        }
+                    },
+                    "parentMarketSegmentDescription":{
+                        "type": "string",
+                        "example": "AGROPECUARIA",
+                        "description": "Descrição do Segmento pai/superior",
+                        "x-totvs":{
+                            "protheus":{
+                                "description":"Campo virtual no Protheus, não é atualizado via API",
+                                "field": "AOV.AOV_DESPAI",
+                                "required": false,
+                                "type": "Char",
+                                "length": "40",
+                                "avialable": false,
+                                "canUpdate": false
+                            }
+                        }
+                    },
+                    "childs":{
+                        "type":"object",
+                        "description":"Lista de Segmentos filhos",
+                        "properties":{
+                            "childMarketSegmentId":{
+                                "type":"string",
+                                "description":"ID do segmento filho"
+                            },
+                            "childMarketSegmantDescription":{
+                                "type":"string",
+                                "description":"Descrição do segmento filho"
+                            }
+                        },
+                        "x-totvs":{
+                            "protheus":{
+                                "description":"Lista de Segmentos Filho ainda não está implementada - usado apenas como consulta",
+                                "avialable": false
+                            }
+                        }
+                    },
+                    "IsActive":{
+                        "type": "boolean",
+                        "example": true,
+                        "description": "Indica se o Segmento está ativo."
+                    }
+                }
+            },
+            "Paging":{
+                "type": "object",
+                "properties":{
+                    "hasNext":{
+                        "type": "boolean",
+                        "example": false
+                    }
+                }
+            },
+            "ErrorDetails":{
+                "type":"object",
+                "allOf":[
+                    {
+                        "$ref":"#/components/schemas/ErrorModel" 
+                    },
+                    {
+                        "$ref":"#/components/schemas/ErrorDetail" 
+                    }
+                ]
+            },
+            "ErrorModel":{
+                "type":"object",
+                "required":[
+                    "code",
+                    "message",
+                    "detailedMessage"
+                ],
+                "properties":{
+                    "code":{
+                        "type":"string",
+                        "description":"Código identificador do erro."
+                    },
+                    "message":{
+                        "type":"string",
+                        "description":"Literal no idioma da requisição descrevendo o erro para o usuário."
+                    },
+                    "detailedMessage":{
+                        "type":"string",
+                        "format":"uri",
+                        "description":"Mensagem técnica e mais detalhada do erro."
+                    },
+                    "helpUrl":{
+                        "type":"string",
+                        "format":"uri",
+                        "description":"URI para documentação do erro."
+                    }
+                }
+            },
+            "ErrorDetail":{
+                "type":"object",
+                "properties":{
+                    "details":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/ErrorModel"   
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}

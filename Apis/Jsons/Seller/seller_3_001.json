@@ -1,0 +1,900 @@
+{
+
+    "openapi": "3.0.1",
+
+    "servers": [
+
+      {
+        "description": "API para a entidade Vendedor (seller) para produtos TOTVS",    
+        "url": "api.totvs.com.br"
+      }
+
+    ],
+
+    "info": {
+        "description": "API para a entidade Vendedor (seller) para produtos TOTVS",
+        "version":"2.004",
+        "title":"Seller",
+        "contact":{
+            "name":"T-Talk",
+            "url": "api.totvs.com.br",
+            "email":"comiteintegracao@totvs.com.br"
+        },
+        "x-totvs": {
+            "messageDocumentation":{
+                "name":"Seller",
+                "description":"API para a entidade Vendedor (seller) para produtos TOTVS",
+                "segment":"Services"
+            },
+            "produtcInformation":{
+              "protheus":{
+                  "contact":"squad.crm@totvs.com.br",
+                  "description":"Cadastro de Vendedores",
+                  "adapter":"mats040.prw"
+              }  
+            }
+        }
+    },
+    "paths":{
+        "/seller":{
+            "get":{
+                "tags":[
+                    "Seller"
+                ],
+                "summary":"Retorna lista de Vendedores",
+                "x-totvs":{
+                    "produtcInformation":{
+                        "protheus":{
+                            "avaliable":true,
+                            "note":"Este verbo não está disponível com o parâmetro code",
+                            "minimalVersion":"12.1.21"
+                        }  
+                    }
+                },
+                "description":"Retorna lista completa de vendedores",
+                "operationId":"getseller",
+                "parameters":[
+                    {
+                        "$ref": "#/components/parameters/Authorization"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Order"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Fields"
+                    },                                            
+                    {
+                        "$ref": "#/components/parameters/Page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/PageSize"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"Operação realizada com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/PagedSellers"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Registro não encontrado!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+
+                                    "$ref":"#/components/schemas/ErrorDetails"
+
+                                }
+                            }
+                        }
+                    }                        
+                },
+                "security":[
+                    {
+                        "api_key":[]
+                    }
+                ]
+            },
+            "post":{
+                "tags":[
+                    "Seller"
+                ],
+                "summary":"Inclui um vendedor",
+                "description":"Inclui um vendedor conforme dados enviados na requisição.",
+                "operationId":"postCode",
+                "parameters":[
+                    {
+                        "$ref": "#/components/parameters/Authorization"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Fields"
+                    }                    
+                ],
+                "requestBody":{
+                    "description":"Vendedor a ser incluído.",
+                    "content":{ 
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/SellerInfo"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"Operação realizada com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/PagedSellers"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Erro durante inclusão do vendedor!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ErrorDetails"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security":[
+                    {
+                        "api_key":[]
+                    }
+                ]
+            }    
+        },
+        "/seller/{code}":{
+            "get":{
+                "tags":[
+                 "Code"   
+                ],
+                "summary":"Retorna vendedor pelo seu Código",
+                "operationId":"getCode",
+                "x-totvs":{
+                    "produtcInformation":{
+                        "protheus":{
+                            "avaliable":true,
+                            "note":"Este verbo está disponível com os parâmetros Authorization e Code.",
+                            "minimalVersion":"12.1.21"
+                        }  
+                    }
+                },
+                "parameters":[
+                    {
+                        "$ref": "#/components/parameters/Authorization"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Code"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Fields"
+                    }                    
+                ],
+                "responses":{
+                    "200":{
+                        "description":"Operação realizada com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/PagedSellers"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Vendedor não localizado na base!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ErrorDetails"
+                                }
+                            }
+                        }
+                    }      
+                },
+                "security":[
+                    {
+                        "api_key":[]
+                    }
+                ]
+            },
+            "put":{
+                "tags":[
+                    "Code"
+                ],
+                "summary":"Altera um vendedor",
+                "description":"Atualiza cadastro de vendedor conforme dados enviados na requisição",
+                "operationId":"putCode",
+                "parameters":[
+                    {
+                        "$ref": "#/components/parameters/Authorization"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Code"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Fields"
+                    }                    
+                ],
+                "requestBody":{
+                    "description":"Vendedor a ser atualizado.",
+                    "content":{ 
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/SellerInfo"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"Operação realizada com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/PagedSellers"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Erro durante a alteração do vendedor!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ErrorDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Registro não encontrado!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+
+                                    "$ref":"#/components/schemas/ErrorDetails"
+
+                                }
+                            }
+                        }
+                    }                                            
+                },
+                "security":[
+                    {
+                        "api_key":[]
+                    }
+                ]   
+            },
+            "delete":{
+                "tags":[
+                    "Code"
+                ],
+                "summary":"Exclui um vendedor",
+                "description":"Exclui cadastro de vendedor conforme dados enviados na requisição.",
+                "operationId":"deleteCode",
+                "parameters":[
+                    {
+                        "$ref": "#/components/parameters/Authorization"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Code"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"Operação realizada com sucesso!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/PagedSellers"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Erro durante a exclusão do vendedor!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/ErrorDetails"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Registro não encontrado!",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+
+                                    "$ref":"#/components/schemas/ErrorDetails"
+
+                                }
+                            }
+                        }
+                    }                                            
+                },
+                "security":[
+                    {
+                        "api_key":[]
+                    }
+                ]   
+            }
+        }
+    },
+    "components":{
+        "parameters":{
+            "Code":{
+                "name":"code",
+                "in":"path",
+                "required":true,
+                "description":"Identificador único do vendedor",
+                "schema":{
+                    "type": "string"
+                }   
+            },
+            "Authorization":{
+                "name":"authorization",
+                "in":"header",
+                "required":true,
+                "description":"Cabeçalho usado para autorização das requisições",
+                "schema":{
+                    "type": "string"
+                }
+            },
+            "Order":{
+                "name":"order",
+                "in":"query",
+                "description":"Ordenação da coleção",
+                "required":false,
+                "schema":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    },
+                    "uniqueItems":true
+                }
+            },
+            "Fields":{
+                "name":"fields",
+                "in":"query",
+                "description":"Campos apresentados no retorno das operações",
+                "required":false,
+                "schema":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    },
+                    "uniqueItems":true
+                }
+            },                            
+            "Page":{
+                "name":"page",
+                "in":"query",
+                "description":"Paginação da coleção",
+                "required":false,
+                "schema":{
+                    "type":"integer",
+                    "format":"int32",
+                    "default":1,
+                    "minimum":1,
+                    "exclusiveMinimum":false
+                }
+            },
+            "PageSize":{
+                "name":"pageSize",
+                "in":"query",
+                "description":"Quantidade de itens por página",
+                "required":false,
+                "schema":{
+                    "type":"integer",
+                    "format":"int32",
+                    "default":20
+                } 
+            }
+        },
+        "schemas":{
+            "PagedSellers":{
+                "type":"object",
+                "allOf":[
+                    {
+                        "$ref":"#/components/schemas/Paging"
+                    },
+                    {
+                        "$ref":"#/components/schemas/Sellers"
+                    }
+                ]
+            },
+            "Sellers":{
+                "type":"object",
+                "properties":{
+                    "Seller":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/SellerInfo"
+                        }
+                    }
+                }
+            },
+            "SellerInfo":{
+                "type":"object",
+                "properties":{
+                    "companyId":{
+                        "type":"string",
+                        "description":"Empresa",
+                        "x-totvs":{
+                            "rm":{
+                                "field":"TVEN.CODCOLIGADA",
+                                "required":true,
+                                "type":"integer",
+                                "lenght":"2",
+                                "available":true
+                            },
+                            "datasul":{
+                                "field":"representante.cod_empresa",
+                                "required":true,
+                                "type":"varchar",
+                                "lenght":"5",
+                                "available":true,
+                                "description":"Codigo da empresa"
+                            }
+                        }
+                    },
+                    "branchID":{
+                        "type":"string",
+                        "description":"Filial",
+                        "x-totvs":{
+                            "rm":{
+                                "field":"TVEN.CODFILIAL",
+                                "required":true,
+                                "type":"integer",
+                                "lenght":"2",
+                                "available":true
+                            },
+                            "protheus":{
+                                "field":"SA3.A3_FILIAL",
+                                "required":true,
+                                "type":"varchar",
+                                "lenght":"8",
+                                "available":true,
+                                "canUpdate":false
+                            }
+                        }
+                    },
+                    "CompanyInternalId":{
+                        "type":"string",
+                        "description":"InternalId da chave completa de empresa do produto",
+                        "x-totvs":{
+                            "rm":{
+                                "field":"TVEN.CODCOLIGADA|TVEN.CODFILIAL",
+                                "required":true,
+                                "type":"string",
+                                "lenght":"10",
+                                "available":true,
+                                "note":"Concatenação da coligada do registro e filial do contexto"
+                            },
+                            "datasul":{
+                                "field":"representante.cod_empresa",
+                                "required":true,
+                                "type":"varchar",
+                                "lenght":"5",
+                                "available":true,
+                                "note":"Código da Empresa"
+                            },                            
+                            "protheus":{
+                                "note":"Para o Protheus é esperado que com o cabeçalho da mensagem seja identificado empresa e filial já pelo Framework estando no ambiente (Empresa x Filial) correto"
+                            }
+                        }
+                    },                    
+                    "code":{
+                        "type":"string",
+                        "description":"Código do vendedor",
+                        "maxLength":16,
+                        "x-totvs":{
+                            "rm":{
+                                "field":"TVEN.CODVEN",
+                                "description":"Código do vendedor",
+                                "required":true,
+                                "type":"varchar",
+                                "lenght":"16",
+                                "available":true
+                            },
+                            "datasul":{
+                                "field":"representante.cdn_repres",
+                                "description":"Código do vendedor",
+                                "required":true,
+                                "type":"integer",
+                                "lenght":"5",
+                                "available":true
+                            },                            
+                            "protheus":{
+                                "field":"SA3.A3_COD",
+                                "description":"Código",
+                                "required":true,
+                                "type":"varchar",
+                                "lenght":"6",
+                                "available":true,
+                                "canUpdate":false
+                            }
+                        }
+                    },
+                    "internalId":{
+                        "type":"string",
+                        "description":"InternalId da entidade",
+                        "x-totvs":{
+                            "rm":{
+                                "field":".",
+                                "required":true,
+                                "lenght":18,
+                                "description":"O internalID do Vendedor é formado por TVEN.CODCOLIGADA|TVEN.CODVEN",
+                                "type":"varchar"
+                            },
+                            "protheus":{
+                                "note":"O internalID do Vendedor é formado por SA3.A3_FILIAL|SA3.A3_COD",
+                                "type":"varchar"
+                            },
+                            "datasul":{
+                                "field":"representante.cod_empresa | string(representante.cdn_repres)",
+                                "required":true,
+                                "lenght":10,
+                                "description":"Empresa + Codigo do Representante",
+                                "type":"char"
+                            }                            
+                        }
+                    },
+                    "name":{
+                        "type":"string",
+                        "description":"Nome do vendedor",
+                        "maxLength":80,
+                        "x-totvs":{
+                            "rm":{
+                                "field":"TVEN.NOME",
+                                "description":"Nome do vendedor",
+                                "required":true,
+                                "type":"varchar",
+                                "lenght":"80",
+                                "available":true
+                            },
+                            "protheus":{
+                                "field":"SA3.A3_NOME",
+                                "required":true,
+                                "type":"varchar",
+                                "lenght":"40",
+                                "available":true,
+                                "canUpdate":true
+                            },
+                            "datasul":{
+                                "field":"representante.nom_pessoa",
+                                "required":true,
+                                "type":"char",
+                                "lenght":"80",
+                                "available":true,
+                                "canUpdate":true
+                            }
+                        } 
+                    },
+                    "shortName":{
+                        "type":"string",
+                        "description":"login do vendedor",
+                        "maxLength":25,
+                        "x-totvs":{
+                            "rm":{
+                                "field":"TVEN.NOME",
+                                "description":"O RM considera os primeiros 25 caracteres do campo Nome do Vendedor",
+                                "required":false,
+                                "type":"varchar",
+                                "lenght":"80",
+                                "available":true
+                            },
+                            "protheus":{
+                                "field":"SA3.A3_NREDUZ",
+                                "required":false,
+                                "type":"varchar",
+                                "lenght":"25",
+                                "available":true,
+                                "canUpdate":true
+                            },
+                            "datasul":{
+                                "field":"representante.nom_abrev",
+                                "description":"Nome Abreviado do Representante",
+                                "required":true,
+                                "type":"char",
+                                "lenght":"12",
+                                "available":true,
+                                "canUpdate":true
+                            }                            
+                        } 
+                    },
+                    "personalIdentification":{
+                        "type":"string",
+                        "description":"CPF do vendedor",
+                        "maxLength":25,
+                        "x-totvs":{
+                            "protheus":{
+                                "field":"SA3.A3_CGC",
+                                "required":false,
+                                "type":"varchar",
+                                "lenght":"14",
+                                "available":true,
+                                "canUpdate":true
+                            },
+                            "datasul":{
+                                "field":"representante.cod_id_feder",
+                                "required":false,
+                                "type":"char",
+                                "lenght":"14",
+                                "available":true,
+                                "canUpdate":true
+                            }
+                        } 
+                    },
+                    "sellerPassWord":{
+                        "type":"string",
+                        "description":"Senha do vendedor",
+                        "maxLength":6,
+                        "x-totvs":{
+                            "protheus":{
+                                "field":"SA3.A3_SENHA",
+                                "description":"Senha do Vendedor no Portal do Vendedor",
+                                "required":false,
+                                "type":"varchar",
+                                "lenght":"6",
+                                "available":true,   
+                                "canUpdate":true
+                            }
+                        } 
+                    },
+                    "sellerPhoneDDD":{
+                        "type":"string",
+                        "description":"DDD do vendedor",
+                        "maxLength":3,
+                        "x-totvs":{
+                            "protheus":{
+                                "field":"SA3.A3_DDTEL",
+                                "required":false,
+                                "type":"varchar",
+                                "lenght":"3",
+                                "available":true,
+                                "canUpdate":true
+                            }
+                        } 
+                    },
+                    "sellerPhone":{
+                        "type":"string",
+                        "description":"Telefone do vendedor",
+                        "maxLength":15,
+                        "x-totvs":{
+                            "protheus":{
+                                "field":"SA3.A3_TEL",
+                                "required":false,
+                                "type":"varchar",
+                                "lenght":"15",
+                                "available":true,
+                                "canUpdate":true
+                            },
+                            "datasul":{
+                                "field":"pessoa_jurid.cod_telefone ou pessoa_fisic.cod_telefone",
+                                "required":false,
+                                "type":"char",
+                                "lenght":"20",
+                                "available":true,
+                                "canUpdate":true,
+                                "description":"Telefone da Pessoa do Representante"
+                            }                            
+                        }  
+                    },
+                    "sellerEmail":{
+                        "type":"string",
+                        "description":"E-mail do vendedor",
+                        "maxLength":80,
+                        "x-totvs":{
+                            "protheus":{
+                                "field":"SA3.A3_EMAIL",
+                                "required":false,
+                                "type":"varchar",
+                                "lenght":"80",
+                                "available":true,
+                                "canUpdate":true
+                            },
+                            "datasul":{
+                                "field":"pessoa_jurid.cod_e_mail ou pessoa_fisic.cod_e_mail",
+                                "required":false,
+                                "type":"char",
+                                "lenght":"80",
+                                "available":true,
+                                "canUpdate":true,
+                                "description":"E-mail da Pessoa do Representante"
+                            }                            
+                        }  
+                    },
+                    "address": {
+                        "type": "object",
+                        "description": "Endereço do Vendedor",
+                        "$ref": "https://rawgit.com/nairansilva/Apis/master/Apis/Seller/address_2_000.json#/components/schemas/AddressInfo"
+                    },
+                    "salesChargeInformation":{
+                        "type":"object",
+                        "description":"Informações de comissões", 
+                        "properties":{
+                            "customerVendorInternalId":{
+                                "type":"string",
+                                "description":"Código de fornecedor do vendedor para processamento de comissões",
+                                "x-totvs":{
+                                    "protheus":{
+                                        "field":"SA3.A3_FORNECE",
+                                        "required":false,
+                                        "note":"required true quando integração com Newhotel",
+                                        "description":"SA2.A2_FILIAL|SA2.A2_COD|SA2.A2_LOJA",
+                                        "type":"varchar",
+                                        "lenght":"50"
+                                    }
+                                }        
+                            },
+                            "salesChargeInterface":{
+                                "type":"string",
+                                "description":"Formato de cobrança de comissões: S-Contas a Pagar;F-Folha de Pagamento;N-Sem Interface",
+                                "enum":[
+                                    "S",
+                                    "F",
+                                    "N"
+                                ],
+                                "x-totvs":{
+                                    "protheus":{
+                                        "field":"SA3.A3_GERASE2",
+                                        "required":false,
+                                        "type":"varchar",
+                                        "lenght":"1",
+                                        "example":"S=Contas a Pagar;F=Folha de Pagamento;N=Sem Interface"
+                                    }
+                                }
+                            },
+                            "indirectSeller":{
+                                "type":"string",
+                                "description":"Código do vendedor indireto",
+                                "maxLength":16,
+                                "x-totvs":{
+                                    "datasul":{
+                                        "description":"Código do Representante Indireto",
+                                        "field":"repres_financ.cdn_repres_indir",
+                                        "required":false,
+                                        "type":"integer",
+                                        "lenght":"5"
+                                    }
+                                }
+                            },
+                            "indirectSellerInternalId":{
+                                "type":"string",
+                                "description":"InternalId do Vendedor Indireto",
+                                "x-totvs":{
+                                    "datasul":{
+                                        "description":"Empresa + Codigo do Representante Indireto",
+                                        "field":"repres_financ.cod_empresa|string(repres_financ.cdn_repres_indir)",
+                                        "required":false,
+                                        "type":"char",
+                                        "lenght":"10"
+                                    }
+                                }                                
+                            }                            
+                        }
+                    },
+                    "active":{
+                        "type":"boolean",
+                        "description":"Vendedor ativo?",
+                        "example":true,
+                        "x-totvs":{
+                            "protheus":{
+                                "field": "A3_MSBLQL",
+                                "required": false,
+                                "type": "char",
+                                "avialable": true,
+                                "canUpdate": true,
+                                "description": "No Protheus Status active/inactive serão convertidos em: active='2',inactive='1'"
+                            },
+                            "rm":{
+                                "field": "TVEN.INATIVO",
+                                "required": false,
+                                "type": "boolean",
+                                "description": "Status do Vendedor: 0-Ativo 1-Inativo"                                   
+                            },
+                            "datasul":{
+                                "field": "representante.ind_sit_repres = 'Ativo'",
+                                "required": false,
+                                "type": "char",
+                                "lenght":"10",
+                                "description": "Situação do Representante"                                                                   
+                            }
+                        }                         
+                    },
+                    "representativeType":{
+                        "type":"string",
+                        "description":"Tipo de representate: I=Interno;E=Externo;P=Parceiro",
+                        "enum":[
+                            "I",
+                            "E",
+                            "P"
+                        ],                        
+                        "x-totvs":{
+                            "protheus":{
+                                "field":"SA3.A3_TIPO",
+                                "required":false,
+                                "type":"varchar",
+                                "lenght":"1"
+                            }
+                        } 
+                    }
+                }
+            },
+            "Paging":{
+                "type":"object",
+                "properties":{
+                    "hasNext":{
+                        "type":"boolean",
+                        "example":false
+                    }
+                }
+            },
+            "ErrorDetails":{
+                "type":"object",
+                "allOf":[
+                    {
+                        "$ref":"#/components/schemas/ErrorModel" 
+                    },
+                    {
+                        "$ref":"#/components/schemas/ErrorDetail" 
+                    }
+                ]
+            },
+            "ErrorModel":{
+                "type":"object",
+                "required":[
+                    "code",
+                    "message",
+                    "detailedMessage"
+                ],
+                "properties":{
+                    "code":{
+                        "type":"string",
+                        "description":"Código identificador do erro."
+                    },
+                    "message":{
+                        "type":"string",
+                        "description":"Literal no idioma da requisição descrevendo o erro para o usuário."
+                    },
+                    "detailedMessage":{
+                        "type":"string",
+                        "format":"uri",
+                        "description":"Mensagem técnica e mais detalhada do erro."
+                    },
+                    "helpUrl":{
+                        "type":"string",
+                        "format":"uri",
+                        "description":"URI para documentação do erro."
+                    }
+                }
+            },
+            "ErrorDetail":{
+                "type":"object",
+                "properties":{
+                    "details":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/components/schemas/ErrorModel"   
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

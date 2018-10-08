@@ -91,7 +91,7 @@
                 ],
                 "summary":"Inclui um vendedor",
                 "description":"Inclui um vendedor conforme dados enviados na requisição.",
-                "operationId":"postsellerId",
+                "operationId":"postCode",
                 "parameters":[
                     {
                         "$ref": "#/components/parameters/Authorization"
@@ -123,7 +123,7 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/ErrorModel"
+                                    "$ref":"#/components/schemas/ErrorDetails"
                                 }
                             }
                         }
@@ -136,18 +136,18 @@
                 ]
             }    
         },
-        "/seller/{sellerId}":{
+        "/seller/{code}":{
             "get":{
                 "tags":[
-                 "Seller"   
+                 "Code"   
                 ],
                 "summary":"Retorna vendedor pelo seu Código",
-                "operationId":"getsellerId",
+                "operationId":"getCode",
                 "x-totvs":{
                     "produtcInformation":{
                         "protheus":{
                             "avaliable":true,
-                            "note":"Este verbo está disponível com os parâmetros Authorization e SellerId.",
+                            "note":"Este verbo está disponível com os parâmetros Authorization e Code.",
                             "minimalVersion":"12.1.21"
                         }  
                     }
@@ -157,7 +157,7 @@
                         "$ref": "#/components/parameters/Authorization"
                     },
                     {
-                        "$ref": "#/components/parameters/SellerId"
+                        "$ref": "#/components/parameters/Code"
                     }
                 ],
                 "responses":{
@@ -176,7 +176,7 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/ErrorModel"
+                                    "$ref":"#/components/schemas/ErrorDetails"
                                 }
                             }
                         }
@@ -190,17 +190,17 @@
             },
             "put":{
                 "tags":[
-                    "Seller"
+                    "Code"
                 ],
                 "summary":"Altera um vendedor",
                 "description":"Atualiza cadastro de vendedor conforme dados enviados na requisição",
-                "operationId":"putsellerId",
+                "operationId":"putCode",
                 "parameters":[
                     {
                         "$ref": "#/components/parameters/Authorization"
                     },
                     {
-                        "$ref": "#/components/parameters/SellerId"
+                        "$ref": "#/components/parameters/Code"
                     }
                 ],
                 "requestBody":{
@@ -229,7 +229,7 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/ErrorModel"
+                                    "$ref":"#/components/schemas/ErrorDetails"
                                 }
                             }
                         }
@@ -243,17 +243,17 @@
             },
             "delete":{
                 "tags":[
-                    "Seller"
+                    "Code"
                 ],
                 "summary":"Exclui um vendedor",
                 "description":"Exclui cadastro de vendedor conforme dados enviados na requisição.",
-                "operationId":"deletesellerId",
+                "operationId":"deleteCode",
                 "parameters":[
                     {
                         "$ref": "#/components/parameters/Authorization"
                     },
                     {
-                        "$ref": "#/components/parameters/SellerId"
+                        "$ref": "#/components/parameters/Code"
                     }
                 ],
                 "responses":{
@@ -272,7 +272,7 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref":"#/components/schemas/ErrorModel"
+                                    "$ref":"#/components/schemas/ErrorDetails"
                                 }
                             }
                         }
@@ -288,8 +288,8 @@
     },
     "components":{
         "parameters":{
-            "SellerId":{
-                "name":"sellerId",
+            "Code":{
+                "name":"code",
                 "in":"path",
                 "required":true,
                 "description":"Identificador único do vendedor",
@@ -380,6 +380,14 @@
                                 "type":"integer",
                                 "lenght":"2",
                                 "available":true
+                            },
+                            "datasul":{
+                                "field":"representante.cod_empresa",
+                                "required":true,
+                                "type":"varchar",
+                                "lenght":"5",
+                                "available":true,
+                                "note":"Codigo da empresa"
                             }
                         }
                     },
@@ -404,7 +412,24 @@
                             }
                         }
                     },
-                    "sellerId":{
+                    "CompanyInternalId":{
+                        "type":"string",
+                        "description":"InternalId da chave completa de empresa do produto",
+                        "x-totvs":{
+                            "rm":{
+                                "field":"TVEN.CODCOLIGADA|TVEN.CODFILIAL",
+                                "required":true,
+                                "type":"string",
+                                "lenght":"10",
+                                "available":true,
+                                "note":"Concatenação da coligada do registro e filial do contexto"
+                            },
+                            "protheus":{
+                                "note":"Para o Protheus é esperado que com o cabeçalho da mensagem seja identificado empresa e filial já pelo Framework estando no ambiente (Empresa x Filial) correto"
+                            }
+                        }
+                    },                    
+                    "code":{
                         "type":"string",
                         "description":"Código do vendedor",
                         "maxLength":16,
@@ -428,7 +453,7 @@
                             }
                         }
                     },
-                    "sellerInternalId":{
+                    "internalId":{
                         "type":"string",
                         "description":"InternalId do vendedor no ERP",
                         "x-totvs":{
@@ -460,6 +485,14 @@
                                 "required":true,
                                 "type":"varchar",
                                 "lenght":"40",
+                                "available":true,
+                                "canUpdate":true
+                            },
+                            "datasul":{
+                                "field":"representante.nom_pessoa",
+                                "required":true,
+                                "type":"varchar",
+                                "lenght":"80",
                                 "available":true,
                                 "canUpdate":true
                             }
@@ -500,6 +533,14 @@
                                 "lenght":"14",
                                 "available":true,
                                 "canUpdate":true
+                            },
+                            "datasul":{
+                                "field":"representante.cod_id_feder",
+                                "required":false,
+                                "type":"varchar",
+                                "lenght":"14",
+                                "available":true,
+                                "canUpdate":true
                             }
                         } 
                     },
@@ -514,12 +555,12 @@
                                 "required":false,
                                 "type":"varchar",
                                 "lenght":"6",
-                                "available":true,
+                                "available":true,   
                                 "canUpdate":true
                             }
                         } 
                     },
-                    "sellerPhoneDiallingCode":{
+                    "sellerPhoneDDD":{
                         "type":"string",
                         "description":"DDD do vendedor",
                         "maxLength":3,
@@ -564,23 +605,15 @@
                             }
                         }  
                     },
-                    "sellerAddress":{
-                        "type":"object",
-                        "description":"Endereços do vendedor",
-                        "properties":{
-                            "items":{
-                                "type":"array",
-                                "items":{
-                                    "$ref":"https://raw.githubusercontent.com/renatocunha/Apis/master/Apis/Address/address_2_000.json#/components/schemas/AddressInfo"
-                               }    
-                            } 
-                        } 
+                    "address": {
+                        "type": "object",
+                        "$ref": "https://rawgit.com/nairansilva/Apis/master/Apis/Seller/address_2_000.json#/components/schemas/AddressInfo"
                     },
                     "salesChargeInformation":{
                         "type":"object",
                         "description":"Informações de comissões", 
                         "properties":{
-                            "sellerCustomerVendorId":{
+                            "CustomerVendorInternalId":{
                                 "type":"string",
                                 "description":"Código de fornecedor do vendedor para processamento de comissões",
                                 "x-totvs":{
@@ -596,7 +629,7 @@
                             },
                             "salesChargeInterface":{
                                 "type":"string",
-                                "description":"Formato de cobrança de comissões",
+                                "description":"Formato de cobrança de comissões: S-Contas a Pagar;F-Folha de Pagamento;N-Sem Interface",
                                 "x-totvs":{
                                     "protheus":{
                                         "field":"SA3.A3_GERASE2",
@@ -607,7 +640,7 @@
                                     }
                                 }
                             },
-                            "indirectSeller":{
+                            "indirectSellerInternalId":{
                                 "type":"string",
                                 "description":"Código do vendedor indireto",
                                 "x-totvs":{
@@ -622,14 +655,22 @@
                             } 
                         }
                     },
-                    "sellerStatus":{
+                    "active":{
                         "type":"boolean",
                         "description":"Vendedor ativo?",
-                        "example":true
+                        "example":true,
+                        "x-totvs":{
+                            "field": "A3_MSBLQL",
+                            "required": false,
+                            "type": "char",
+                            "avialable": true,
+                            "canUpdate": true,
+                            "note": "No Protheus Status active/inactive serão convertidos em: active='2',inactive='1'"
+                        }                         
                     },
                     "representativeType":{
                         "type":"string",
-                        "description":"Tipo de representate",
+                        "description":"Tipo de representate: I=Interno;E=Externo;P=Parceiro",
                         "x-totvs":{
                             "protheus":{
                                 "field":"SA3.A3_TIPO",
@@ -637,7 +678,9 @@
                                 "type":"varchar",
                                 "lenght":"1",
                                 "enum":[
-                                    "I=Interno;E=Externo;P=Parceiro"
+                                    "I",
+                                    "E",
+                                    "P"
                                 ]
                             }
                         } 
@@ -653,7 +696,7 @@
                     }
                 }
             },
-            "Error":{
+            "ErrorDetails":{
                 "type":"object",
                 "allOf":[
                     {

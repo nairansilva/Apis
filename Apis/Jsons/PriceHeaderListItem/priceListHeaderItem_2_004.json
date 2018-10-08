@@ -1,0 +1,1207 @@
+{
+    
+    "openapi": "3.0.1",
+    
+        "servers": [
+    
+          {
+            "description": "API para cadastro tabela de preços dos produtos TOTVS",    
+            "url": "api.totvs.com.br"
+          }
+    
+        ], 
+        
+        "info": {
+            "description": "API para manutenção de tabela de preço para os produtos TOTVS",
+            "version":"2.004",
+            "title":"PriceListHeaderItem",
+            "contact":{
+                "name":"T-Talk",
+                "url": "api.totvs.com.br",
+                "email":"comiteintegracao@totvs.com.br"
+            },
+            "x-totvs":{
+                "messageDocumentation":{
+                    "name":"PriceListHeaderItem",
+                    "descriotion":"API para entidade Tabela de Preço para produtos TOTVS",
+                    "segment":"Services"
+                },
+                "productInformation":{
+                    "protheus":{
+                        "contact":"squad.crm@totvs.com.br",
+                        "description":"Cadastro de Tabela de Preço",
+                        "adapter":"omsa010.prx"
+                    }
+                }
+            }
+        },
+        "paths":{
+            "/priceList":{
+                "get":{
+                    "tags":[
+                        "priceListHeaderItem"
+                    ],
+                    "summary":"Retorna lista de Tabelas de Preço",
+                    "x-totvs":{
+                        "produtcInformation":{
+                            "protheus":{
+                                "avaliable":true,
+                                "minimalVersion":"12.1.21"
+                            }  
+                        }
+                    },
+                    "description":"Retorna lista completa de vendedores",
+                    "operationId":"getpriceListHeaderItem",
+                    "parameters":[
+                        {
+                            "$ref": "#/components/parameters/Authorization"
+                        },
+                        {
+                            "$ref": "#/components/parameters/Order"
+                        },
+                        {
+                            "$ref": "#/components/parameters/Fields"
+                        },                        
+                        {
+                            "$ref": "#/components/parameters/Page"
+                        },
+                        {
+                            "$ref": "#/components/parameters/PageSize"
+                        }
+                    ],
+                    "responses":{
+                        "200":{
+                            "description":"Operação realizada com sucesso!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/PagedPriceListHeaderItems"
+                                    }
+                                }
+                            }
+                        },
+                        "404":{
+                            "description":"Registro não encontrado!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+    
+                                        "$ref":"#/components/schemas/ErrorDetails"
+    
+                                    }
+                                }
+                            }
+                        }                            
+                    },
+                    "security":[
+                        {
+                            "api_key":[]
+                        }
+                    ]
+                },
+                "post":{
+                    "tags":[
+                        "priceListHeaderItem"
+                    ],
+                    "summary":"Inclui uma Tabela de Preço",
+                    "description":"Inclui uma tabela de preço conforme dados enviados na requisição.",
+                    "operationId":"postpriceListHeaderItem",
+                    "parameters":[
+                        {
+                            "$ref": "#/components/parameters/Authorization"
+                        },
+                        {
+                            "$ref": "#/components/parameters/Fields"
+                        }                                                
+                    ],
+                    "requestBody":{
+                        "description":"Tabela de preço a ser incluída.",
+                        "content":{ 
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/PagedPriceListHeaderItems"
+                                }
+                            }
+                        }
+                    },
+                    "responses":{
+                        "200":{
+                            "description":"Operação realizada com sucesso!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/PagedPriceListHeaderItems"
+                                    }
+                                }
+                            }
+                        },
+                        "400":{
+                            "description":"Erro durante inclusão da tabela de preço!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+
+                                        "$ref":"#/components/schemas/ErrorDetails"
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "security":[
+                        {
+                            "api_key":[]
+                        }
+                    ]
+                }
+            },
+            "/priceList/{code}":{
+                "get":{
+                    "tags":[
+                     "code"   
+                    ],
+                    "summary":"Retorna a tabela de preço e todos os seus itens de acordo com o seu código",
+                    "operationId":"getpriceListCode",
+                    "x-totvs":{
+                        "produtcInformation":{
+                            "protheus":{
+                                "avaliable":true,
+                                "note":"Este verbo está disponível com os parâmetros Authorization e code.",
+                                "minimalVersion":"12.1.21"
+                            }  
+                        }
+                    },
+                    "parameters":[
+                        {
+                            "$ref": "#/components/parameters/Authorization"
+                        },
+                        {
+                            "$ref": "#/components/parameters/code"
+                        },
+                        {
+                            "$ref": "#/components/parameters/Order"
+                        },                        
+                        {
+                            "$ref": "#/components/parameters/Fields"
+                        }                                                
+                    ],
+                    "responses":{
+                        "200":{
+                            "description":"Operação realizada com sucesso!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/PagedPriceListHeaderItems"
+                                    }
+                                }
+                            }
+                        },
+                        "404":{
+                            "description":"Registro não encontrado!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+
+                                        "$ref":"#/components/schemas/ErrorDetails"
+
+                                    }
+                                }
+                            }
+                        }                                                            
+                    },
+                    "security":[
+                        {
+                            "api_key":[]
+                        }
+                    ]
+                },
+                "put":{
+                    "tags":[
+                        "code"
+                    ],
+                    "summary":"Altera o Cabeçalho da tabela de preço",
+                    "description":"Atualiza o cadastro da tabela de preço conforme dados enviados na requisição",
+                    "operationId":"putpriceListCode",
+                    "parameters":[
+                        {
+                            "$ref": "#/components/parameters/Authorization"
+                        },
+                        {
+                            "$ref": "#/components/parameters/code"
+                        },
+                        {
+                            "$ref": "#/components/parameters/Fields"
+                        }                                                   
+                    ],
+                    "requestBody":{
+                        "description":"Tabela de preço a ser atualizada.",
+                        "content":{ 
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/PagedPriceListHeaderItems"
+                                }
+                            }
+                        }
+                    },
+                    "responses":{
+                        "200":{
+                            "description":"Operação realizada com sucesso!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/PagedPriceListHeaderItems"
+                                    }
+                                }
+                            }
+                        },
+                        "400":{
+                            "description":"Erro durante a alteração da tabela de preço!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/ErrorDetails"
+                                    }
+                                }
+                            }
+                        },
+                        "404":{
+                            "description":"Registro não encontrado!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+
+                                        "$ref":"#/components/schemas/ErrorDetails"
+
+                                    }
+                                }
+                            }
+                        }                                                      
+                    },
+                    "security":[
+                        {
+                            "api_key":[]
+                        }
+                    ]   
+                },
+                "delete":{
+                    "tags":[
+                        "code"
+                    ],
+                    "summary":"Exclui uma tabela de preço",
+                    "description":"Exclui a tabela de preço conforme dados enviados na requisição.",
+                    "operationId":"deletepriceListCode",
+                    "parameters":[
+                        {
+                            "$ref": "#/components/parameters/Authorization"
+                        },
+                        {
+                            "$ref": "#/components/parameters/code"
+                        }
+                    ],
+                    "responses":{
+                        "200":{
+                            "description":"Operação realizada com sucesso!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/PagedPriceListHeaderItems"
+                                    }
+                                }
+                            }
+                        },
+                        "400":{
+                            "description":"Erro durante a exclusão da tabela de preço!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/ErrorDetails"
+                                    }
+                                }
+                            }
+                        },
+                        "404":{
+                            "description":"Registro não encontrado!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+
+                                        "$ref":"#/components/schemas/ErrorDetails"
+
+                                    }
+                                }
+                            }
+                        }                                                      
+                    },
+                    "security":[
+                        {
+                            "api_key":[]
+                        }
+                    ]   
+                }
+            },
+            "/priceList/{code}/itensTablePrice/":{
+                "get":{
+                    "tags":[
+                     "itensTablePrice"   
+                    ],
+                    "summary":"Retorna os itens da tabela de preço de acordo com o seu código",
+                    "operationId":"getpriceListItems",
+                    "x-totvs":{
+                        "produtcInformation":{
+                            "protheus":{
+                                "avaliable":true,
+                                "note":"Este verbo está disponível com os parâmetros Authorization e code.",
+                                "minimalVersion":"12.1.21"
+                            }  
+                        }
+                    },
+                    "parameters":[
+                        {
+                            "$ref": "#/components/parameters/Authorization"
+                        },
+                        {
+                            "$ref": "#/components/parameters/code"
+                        },
+                        {
+                            "$ref": "#/components/parameters/Order"
+                        },                        
+                        {
+                            "$ref": "#/components/parameters/Fields"
+                        }                             
+                    ],
+                    "responses":{
+                        "200":{
+                            "description":"Operação realizada com sucesso!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/PagedItensTablePrice"
+                                    }
+                                }
+                            }
+                        },
+                        "404":{
+                            "description":"Registro não encontrado!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+
+                                        "$ref":"#/components/schemas/ErrorDetails"
+
+                                    }
+                                }
+                            }
+                        }                              
+                    },
+                    "security":[
+                        {
+                            "api_key":[]
+                        }
+                    ]
+                },
+                "post":{
+                    "tags":[
+                        "itensTablePrice"
+                    ],
+                    "summary":"Inclui um item na Tabela de Preço",
+                    "description":"Inclui um novo item na tabela de preço conforme dados enviados.",
+                    "operationId":"postpriceListItems",
+                    "parameters":[
+                        {
+                            "$ref": "#/components/parameters/Authorization"
+                        },
+                        {
+                            "$ref": "#/components/parameters/code"
+                        },
+                        {
+                            "$ref": "#/components/parameters/Fields"
+                        }                        
+                    ],
+                    "requestBody":{
+                        "description":"Tabela de preço a ser incluída.",
+                        "content":{ 
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/itensTablePrices"
+                                }
+                            }
+                        }
+                    },
+                    "responses":{
+                        "200":{
+                            "description":"Operação realizada com sucesso!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/PagedItensTablePrice"
+                                    }
+                                }
+                            }
+                        },
+                        "400":{
+                            "description":"Erro durante inclusão da tabela de preço!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/ErrorDetails"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "security":[
+                        {
+                            "api_key":[]
+                        }
+                    ]
+                }
+            },
+            "/priceList/{code}/itensTablePrice/{itemList}":{
+                "get":{
+                    "tags":[
+                     "itemTablePrice"   
+                    ],
+                    "summary":"Retorna um item específico de preço de acordo com o seu código",
+                    "operationId":"getpriceListItemList",
+                    "x-totvs":{
+                        "produtcInformation":{
+                            "protheus":{
+                                "avaliable":true,
+                                "note":"Este verbo está disponível com os parâmetros Authorization e code.",
+                                "minimalVersion":"12.1.21"
+                            }  
+                        }
+                    },
+                    "parameters":[
+                        {
+                            "$ref": "#/components/parameters/Authorization"
+                        },
+                        {
+                            "$ref": "#/components/parameters/code"
+                        },
+                        {
+                            "$ref": "#/components/parameters/itemList"
+                        },
+                        {
+                            "$ref": "#/components/parameters/Order"
+                        },                        
+                        {
+                            "$ref": "#/components/parameters/Fields"
+                        }                             
+                    ],
+                    "responses":{
+                        "200":{
+                            "description":"Operação realizada com sucesso!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/PagedItensTablePrice"
+                                    }
+                                }
+                            }
+                        },
+                        "404":{
+                            "description":"Registro não encontrado!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+
+                                        "$ref":"#/components/schemas/ErrorDetails"
+
+                                    }
+                                }
+                            }
+                        }                              
+                    },
+                    "security":[
+                        {
+                            "api_key":[]
+                        }
+                    ]
+                },
+                "put":{
+                    "tags":[
+                        "itemTablePrice"
+                    ],
+                    "summary":"Altera um item da tabela de preço",
+                    "description":"Atualiza um item da tabela de preço conforme dados enviados na requisição",
+                    "operationId":"putpriceListItemList",
+                    "parameters":[
+                        {
+                            "$ref": "#/components/parameters/Authorization"
+                        },
+                        {
+                            "$ref": "#/components/parameters/code"
+                        },
+                        {
+                            "$ref": "#/components/parameters/itemList"
+                        },
+                        {
+                            "$ref": "#/components/parameters/Fields"
+                        }                        
+                    ],
+                    "requestBody":{
+                        "description":"Tabela de preço a ser atualizada.",
+                        "content":{ 
+                            "application/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/itensTablePrices"
+                                }
+                            }
+                        }
+                    },
+                    "responses":{
+                        "200":{
+                            "description":"Operação realizada com sucesso!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/PagedItensTablePrice"
+                                    }
+                                }
+                            }
+                        },
+                        "400":{
+                            "description":"Erro ao alterar a tabela de preço!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+
+                                        "$ref":"#/components/schemas/ErrorDetails"
+
+                                    }
+                                }
+                            }
+                        },                        
+                        "404":{
+                            "description":"Registro não encontrado!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+
+                                        "$ref":"#/components/schemas/ErrorDetails"
+
+                                    }
+                                }
+                            }
+                        }                              
+                    },
+                    "security":[
+                        {
+                            "api_key":[]
+                        }
+                    ]   
+                },
+                "delete":{
+                    "tags":[
+                        "itemTablePrice"
+                    ],
+                    "summary":"Exclui um item da tabela de preço",
+                    "description":"Exclui um item da tabela de preço conforme dados enviados na requisição.",
+                    "operationId":"deletepriceListItemList",
+                    "parameters":[
+                        {
+                            "$ref": "#/components/parameters/Authorization"
+                        },
+                        {
+                            "$ref": "#/components/parameters/code"
+                        },
+                        {
+                            "$ref": "#/components/parameters/itemList"
+                        },
+                        {
+                            "$ref": "#/components/parameters/Fields"
+                        }
+                    ],
+                    "responses":{
+                        "200":{
+                            "description":"Operação realizada com sucesso!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/PagedPriceListHeaderItems"
+                                    }
+                                }
+                            }
+                        },
+                        "400":{
+                            "description":"Erro durante a exclusão da tabela de preço! ",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+                                        "$ref":"#/components/schemas/ErrorDetails"
+                                    }
+                                }
+                            }
+                        },
+                        "404":{
+                            "description":"Registro não encontrado!",
+                            "content":{
+                                "application/json":{
+                                    "schema":{
+
+                                        "$ref":"#/components/schemas/ErrorDetails"
+
+                                    }
+                                }
+                            }
+                        }                                                      
+                    },
+                    "security":[
+                        {
+                            "api_key":[]
+                        }
+                    ]   
+                }                
+            }                
+        },
+        "components":{
+            "parameters":{
+                "code":{
+                    "name":"code",
+                    "in":"path",
+                    "required":true,
+                    "description":"Identificador único da tabela de preço",
+                    "schema":{
+                        "type": "string"
+                    }
+                },
+                "itemList":{
+                    "name":"itemList",
+                    "in":"path",
+                    "required":true,
+                    "description":"Identificador do item da tabela de preço",
+                    "schema":{
+                        "$ref":"#/components/schemas/itensTablePriceInfo"
+                    }
+                },                
+                "Authorization":{
+                    "name":"authorization",
+                    "in":"header",
+                    "required":true,
+                    "description":"Cabeçalho usado para autorização das resquisições.",
+                    "schema":{
+                        "type": "string"
+                    }
+                },
+                "Order":{
+                    "name":"order",
+                    "in":"query",
+                    "description":"Ordenação da coleção",
+                    "required":false,
+                    "schema":{
+                        "type":"array",
+                        "items":{
+                            "type":"string"
+                        },
+                        "uniqueItems":true
+                    }
+                },
+                "Fields":{
+                    "name":"fields",
+                    "in":"query",
+                    "description":"Campos apresentados no retorno das operações",
+                    "required":false,
+                    "schema":{
+                        "type":"array",
+                        "items":{
+                            "type":"string"
+                        },
+                        "uniqueItems":true
+                    }
+                },                
+                "Page":{
+                    "name":"page",
+                    "in":"query",
+                    "description":"Paginação da coleção",
+                    "required":false,
+                    "schema":{
+                        "type":"integer",
+                        "format":"int32",
+                        "default":1,
+                        "minimum":1,
+                        "exclusiveMinimum":false
+                    }
+                },
+                "PageSize":{
+                    "name":"pageSize",
+                    "in":"query",
+                    "description":"Quantidade de itens por página",
+                    "required":false,
+                    "schema":{
+                        "type":"integer",
+                        "format":"int32",
+                        "default":20
+                    } 
+                }                                                
+            },
+            "schemas":{
+                "PagedPriceListHeaderItems":{
+                    "type":"object",
+                    "allOf":[
+                        {
+                            "$ref":"#/components/schemas/Paging"
+                        },
+                        {
+                            "$ref":"#/components/schemas/PriceListHeaderItems"
+                        }
+                    ]
+                },           
+                "PriceListHeaderItems":{
+                    "type":"object",
+                    "properties":{
+                        "PriceListHeaderItems":{
+                            "type":"array",
+                            "items":{
+                                "$ref":"#/components/schemas/PriceListHeaderItemsInfo"
+                            }
+                        }
+                    }
+                },
+                "PriceListHeaderItemsInfo":{
+                    "type":"object",
+                    "properties":{
+                        "branchId":{
+                            "type":"string",
+                            "description":"ID Filial",
+                            "x-totvs":{
+                                "protheus":{
+                                    "required":false,
+                                    "type":"Char",
+                                    "length":"2",
+                                    "description":"Pode ter tamanho variável até 8 com Gestão de Empresa ativado"
+                                }
+                            }
+                        }, 
+                        "companyInternalId":{
+                            "type":"string",
+                            "description":"InternalId da chave completa de empresa do produto",
+                            "x-totvs":{
+                                "protheus":{
+                                    "note": "para o Protheus é esperado que com o cabeçalho da mensagem seja identificado empresa e filial já pelo Framework estando no ambiente (Empresa x Filial) correto"
+                                }
+                            }
+                        },                                               
+                        "code":{
+                            "type":"string",
+                            "description":"Código da tabela de preço",
+                            "maxLength":4,
+                            "x-totvs":{
+                                "protheus":{
+                                    "field":"DA0.DA0_CODTAB",
+                                    "required":true,
+                                    "type":"varchar",
+                                    "length":"6",
+                                    "available":true
+                                }
+                            }
+                        },
+                        "internalId":{
+                            "type":"string",
+                            "description":"InternalId da chave completa da tabela de preço",
+                            "x-tovs":{
+                                "protheus":{
+                                    "note":"InternalID da tabela de preço utilizado na integração EAI-TOTVS formado por EMPRESA|DA0_FILIAL|DA0_CODTAB"
+                                }
+                            }
+                        },
+                        "companyId":{
+                            "type":"string",
+                            "description":"Código da empresa",
+                            "x-totvs":{
+                                "protheus":{
+                                    "required":false,
+                                    "type":"varchar",
+                                    "length":"4",
+                                    "note":"pode ter tamanho variável até 4 com Gestão de Empresa ativado"
+                                }
+                            }
+                        },
+                        "name":{
+                            "type":"string",
+                            "description":"Descrição da Tabela",
+                            "maxLength":40,
+                            "x-totvs":{
+                                "protheus":{
+                                    "field":"DA0.DA0_DESCRI",
+                                    "note":"Descrição",
+                                    "length":"30"
+                                },
+                                "datasul":{
+                                    "length":"40"
+                                }
+                            }
+                        },
+                        "initialDate":{
+                            "type":"string",
+                            "format":"date",
+                            "example":"2018-07-19",
+                            "description":"Data Inicial da Vigência AAAA-MM-DD",
+                            "maxLength":10,
+                            "x-totvs":{
+                                "protheus":{
+                                    "field":"DA0.DA0_DATDE",
+                                    "required":true,
+                                    "type":"varchar",
+                                    "length":10,
+                                    "description":"o conteúdo deve vir DD/MM/AAAA"
+                                }
+                            }
+                        },
+                        "finalDate":{
+                            "type":"string",
+                            "format":"date",
+                            "example":"20180719",
+                            "description":"Data Final da Vigência AAAAMMDD",
+                            "x-totvs":{
+                                "protheus":{
+                                    "field":"DA0.DA0_DATATE",
+                                    "description":"o conteúdo deve vir DD/MM/AAAA",
+                                    "required":true,
+                                    "type":"varchar",
+                                    "length":10
+                                }
+                            }
+                        }, 
+                        "initiaHour":{
+                            "type":"string",
+                            "format":"date-time",
+                            "description":"Hora Inicial Vigencia HH:MM:SS",
+                            "x-totvs":{
+                                "protheus":{
+                                    "field":"DA0.DA0_HORADE",
+                                    "description":"Hora inicial de vigência da tabela de preço. No protheus o formato deverá ser HH:MM",
+                                    "required":true,
+                                    "type":"varchar",
+                                    "length":5
+                                }
+                            }
+                        },
+                        "finalHour":{
+                            "type":"string",
+                            "format":"date-time",
+                            "description":"Hora Final Vigencia HH:MM:SS",
+                            "x-totvs":{
+                                "protheus":{
+                                    "field":"DA0.DA0_HORATE",
+                                    "description":"Hora final de vigência da tabela de preço. No protheus o formato deverá ser HH:MM",
+                                    "required":true,
+                                    "type":"varchar",
+                                    "length":5
+                                }
+                            }
+                        },
+                        "valueDescount":{
+                            "type":"number",
+                            "format":"double",
+                            "description":"Desconto Tabela de Preço",
+                            "maxLength":12
+                        },
+                        "activeTablePrice":{
+                            "type":"string",
+                            "description":"Tabela de Preco Ativo? 1 = Sim; 2 = Nao",
+                            "enum":[
+                                "1",
+                                "2"
+                            ],
+                            "x-totvs":{
+                                "protheus":{
+                                    "field":"DA0.DA0_ATIVO",
+                                    "decription":"Tabela Ativa",
+                                    "type":"varchar",
+                                    "length":"1"
+                                }
+                            }
+                        },
+                        "itensTablePrice":{
+                            "type":"object",
+                             "$ref":"#/components/schemas/itensTablePriceInfo"   
+                         }
+                    }
+                },
+                "PagedItensTablePrice":{
+                    "type":"object",
+                    "allOf":[
+                        {
+                            "$ref":"#/components/schemas/Paging"
+                        },
+                        {
+                            "$ref":"#/components/schemas/itensTablePrices"
+                        }
+                    ]
+                },                  
+                "itensTablePrices":{
+                    "type":"array",
+                    "items":{
+                        "$ref":"#/components/schemas/itensTablePriceInfo"
+                    }
+                },                
+                "itensTablePriceInfo":{
+                    "type":"array",
+                    "items":{
+                        "properties":{
+                            "code":{
+                                "type":"string",
+                                "description":"Código da tabela de preço",
+                                "x-totvs":{
+                                    "protheus":{
+                                        "field":"DA1.DA1_CODTAB",
+                                        "required":true,
+                                        "type":"varchar",
+                                        "length":"6",
+                                        "available":true
+                                    }
+                                }
+                            },                                
+                            "itemList":{
+                                "type":"string",
+                                "description":"Item da Tabela",
+                                "maxLength":4,
+                                "x-totvs":{
+                                    "protheus":{
+                                        "type":"varchar",
+                                        "field":"DA1.DA1_ITEM",
+                                        "description":"Item da Tabela de Preço",
+                                        "length":"4"
+                                    }
+                                }
+                            },                        
+                            "itemCode":{
+                                "type":"string",
+                                "description":"Código do Produto",
+                                "maxLength":30,
+                                "x-totvs":{
+                                    "protheus":{
+                                        "type":"varchar",
+                                        "field":"DA1.DA1_CODPRO",
+                                        "description":"",
+                                        "length":"15"
+                                    }
+                                }
+                            },
+                            "itemInternalId":{
+                                "type":"string",
+                                "description":"InternalId da chave completa do Item",
+                                "x-totvs":{
+                                    "protheus":{
+                                        "required":true,
+                                        "type":"varchar",
+                                        "length":"50",
+                                        "note":"InternalID do produto formado por EMPRESA|DA1_FILIAL|DA1_CODPRO|DA1_CODTAB|DA1_ITEM"
+                                    }
+                                }
+                            },
+                            "referenceCode":{
+                                "type":"string",
+                                "description":"Código da Referência do Produto",
+                                "maxLength":8,
+                                "x-totvs":{
+                                    "datasul":{
+                                        "field":"cod-refer",
+                                        "required":true,
+                                        "type":"string",
+                                        "length":"8"
+                                    }
+                                }
+                            },
+                            "unitOfMeasureCode":{
+                                "type":"string",
+                                "description":"Código da Unidade de Medida de Venda",
+                                "maxLength":2,
+                                "x-totvs":{
+                                    "datasul":{
+                                        "field":"cod-unid-med",
+                                        "required":true,
+                                        "type":"string",
+                                        "length":"2"
+                                    }
+                                }                                            
+                            },
+                            "minimumSalesPrice":{
+                                "type":"number",
+                                "format":"double",
+                                "description":"Preco mínimo de venda do produto - Valor Sem Frete",
+                                "maxLength":12,
+                                "x-totvs":{
+                                    "protheus":{
+                                        "field":"DA1.DA1_PRCVEN",
+                                        "length":"12",
+                                        "description":"Preco Venda",
+                                        "note":"Campo com duas casas decimais"
+                                    }
+                                }
+                            },
+                            "minimumSalesPriceFOB":{
+                                "type":"number",
+                                "format":"double",
+                                "description":"Preco de minimo de venda do produto - FOB",
+                                "maxLength":12
+                            },
+                            "discountValue":{
+                                "type":"number",
+                                "format":"double",
+                                "description":"Valor de Desconto em reais",
+                                "maxLength":12,
+                                "x-totvs":{
+                                    "protheus":{
+                                        "field":"DA1.DA1_VLRDES",
+                                        "length":"9",
+                                        "description":"Vlr.Desconto",
+                                        "note":"Campo com duas casas decimais"
+                                    }
+                                }
+                            },
+                            "discountFactor":{
+                                "type":"number",
+                                "format":"double",
+                                "description":"Fator de Acresc./Desconto%",
+                                "maxLength":11,
+                                "x-totvs":{
+                                    "protheus":{
+                                        "field":"DA1.DA1_PERDES",
+                                        "length":"6",
+                                        "description":"Fator",
+                                        "note":"Campo com quatro casas decimais"
+                                    }
+                                }                            
+                            },
+                            "minimumAmount":{
+                                "type":"number",
+                                "format":"double",
+                                "description":"Quantidade Mínima",
+                                "maxLength":11
+                            },                                              
+                            "cifPrice":{
+                                "type":"number",
+                                "format":"double",
+                                "description":"Preco CIF",
+                                "maxLength":11
+                            },                                        
+                            "fobPrice":{
+                                "type":"number",
+                                "format":"double",
+                                "description":"Preco FOB",
+                                "maxLength":11
+                            },                                                                                
+                            "itemValidity":{
+                                "type":"string",
+                                "format":"date",
+                                "example":"2018-07-19",
+                                "description":"Data Vigência do item AAAA-MM-DD",
+                                "maxLength":10,
+                                "x-totvs":{
+                                    "protheus":{
+                                        "field":"DA1_DATVIG",
+                                        "discription":"Vigencia do item",
+                                        "type":"varchar",
+                                        "required":true,
+                                        "length":1,
+                                        "note":"conteúdo deve vir DD/MM/AAAA"
+                                    }
+                                }
+                            },
+                            "typePrice":{
+                                "type":"string",
+                                "description":"Tipo da Tabela de Preço: 1 = Preco Venda , 2 = Venda Consumidor, 3 = Atacado , 4 = Varejo, 5 = Promocao",
+                                "maxLength":1,
+                                "enum":[
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5"
+                                ],
+                                "x-totvs":{
+                                    "protheus":{
+                                        "field":"DA1.DA1_TIPPRE",
+                                        "description":"Tipo Preço",
+                                        "note":"Tipo da Tabela de Preço: Preco Venda, Venda Consumidor, Atacado , Varejo, Promoção"
+                                    }
+                                }
+                            },
+                            "activeItemPrice":{
+                                "type":"string",
+                                "description":"Status do Item da Tabela de Preço: 1 = Sim; 2 = Não",
+                                "maxLength":1,
+                                "enum":[
+                                    "1",
+                                    "2"
+                                ],                                
+                                "x-totvs":{
+                                    "protheus":{
+                                        "field":"DA1_ATIVO",
+                                        "discription":"Ativo",
+                                        "type":"varchar",
+                                        "required":false,
+                                        "length":1,
+                                        "note":"1 = Sim; 2 = Nao"
+                                    }
+                                }
+                            } 
+                        }
+                    }
+                },                
+                "Paging":{
+                    "type":"object",
+                    "properties":{
+                        "hasNext":{
+                            "type":"boolean",
+                            "example":false
+                        }
+                    }
+                },
+                "ErrorDetails":{
+                    "type":"object",
+                    "allOf":[
+                        {
+                            "$ref":"#/components/schemas/ErrorModel" 
+                        },
+                        {
+                            "$ref":"#/components/schemas/ErrorDetail" 
+                        }
+                    ]
+                },
+                "ErrorModel":{
+                    "type":"object",
+                    "required":[
+                        "code",
+                        "message",
+                        "detailedMessage"
+                    ],
+                    "properties":{
+                        "code":{
+                            "type":"string",
+                            "description":"Código identificador do erro."
+                        },
+                        "message":{
+                            "type":"string",
+                            "description":"Literal no idioma da requisição descrevendo o erro para o usuário."
+                        },
+                        "detailedMessage":{
+                            "type":"string",
+                            "format":"uri",
+                            "description":"Mensagem técnica e mais detalhada do erro."
+                        },
+                        "helpUrl":{
+                            "type":"string",
+                            "format":"uri",
+                            "description":"URI para documentação do erro."
+                        }
+                    }
+    
+                },
+                "ErrorDetail":{
+                    "type":"object",
+                    "properties":{
+                        "details":{
+                            "type":"array",
+                            "items":{
+                                "$ref":"#/components/schemas/ErrorModel"   
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+}
