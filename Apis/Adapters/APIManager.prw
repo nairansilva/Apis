@@ -2017,8 +2017,6 @@ Static Function RelationExecuteItem(cAlias, cAliasFather, aRelationItem, cOrderK
 			If nX <> nLenRItem
 				cQuery += " AND "
 			EndIf
-		Else	
-			ConOut( "_____________________________________________ Campo deu BOSTA: " + aRelationItem[nX][1] )
 		Endif
 	Next nX
 
