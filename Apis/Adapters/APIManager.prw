@@ -1821,7 +1821,7 @@ Static Function SetJsonObject( oApiManager, aApiMap, aRelations, nPosRelation, c
 		EndIf
 
 		If oItem != Nil .And. aItemPos == Nil
-			If ValidJson(oItem)
+			If ValidSkip(oItem)
 				nCount++
 				aAdd(aItensCab,oItem )
 			EndIf
@@ -1929,21 +1929,19 @@ Static Function SetJsonObject( oApiManager, aApiMap, aRelations, nPosRelation, c
 	EndDo
 
 	If nRecno == 0
-		If oItem != Nil 
-			If ValidJson(oItem)
-				aAdd(aItensCab,oItem)
+		If Len(aItensCab) > 0 .Or. oItem != Nil
+			If oItem != Nil .And. nCount != oApiManager:nPageSize
+				If ValidSkip(oItem)
+					aAdd(aItensCab,oItem)
+				EndIf
 			EndIf
 			
 			If (cTemp)->(Eof())
 				lHasnext := .F.
 			EndIf
 
-			If Len(aItensCab) > 0
-				oApiManager:SetJson(lHasnext, aItensCab)
-				lRet	:= .T.
-			Else
-				oApiManager:SetJsonError("404","Registro não encontrado.","Não foi encontrado o registro especificado.",/*cHelpUrl*/,/*aDetails*/)
-			EndIf
+			oApiManager:SetJson(lHasnext, aItensCab)
+			lRet	:= .T.
 		Else
 			oApiManager:SetJsonError("404","Registro não encontrado.","Não foi encontrado o registro especificado.",/*cHelpUrl*/,/*aDetails*/)
 		EndIf
@@ -2274,8 +2272,18 @@ Static Function MontaEstrut(Self, lTran)
 
 Return aRet
 
+//-------------------------------------------------------------------
+/*/{Protheus.doc} ValidSkip
+Valida se o registro deve ser ignorado
 
-Static Function ValidJson(oJson)
+@param oJson  	, objeto	, Objeto Json que será impresso
+
+@author Squad CRM/Faturamento
+@since 08/10/2018
+@version Protheus 12
+/*/
+//-------------------------------------------------------------------
+Static Function ValidSkip(oJson)
 	Local lRet	:= .T.
 	Local aRet	:= {}
 	
@@ -2285,6 +2293,20 @@ Static Function ValidJson(oJson)
 
 Return lRet
 
+//-------------------------------------------------------------------
+/*/{Protheus.doc} MontaJoin
+Valida se o registro deve ser ignorado
+
+@param oApiManager  , objeto	, Objeto ApiManager
+@param cInfoItem  	, objeto	, NickName da estrutura
+@param aRelations  	, objeto	, Relações das entruturas
+@param cFilter  	, objeto	, Filtro a ser realizado na query
+
+@author Squad CRM/Faturamento
+@since 08/10/2018
+@version Protheus 12
+/*/
+//-------------------------------------------------------------------
 Static Function MontaJoin(oApiManager, cInfoItem, aRelations, cFilter)
 	Local aTeste	:= {}
 	Local cRet		:= ""

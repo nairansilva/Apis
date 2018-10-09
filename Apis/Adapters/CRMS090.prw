@@ -28,7 +28,7 @@ WSRESTFUL Notes DESCRIPTION "Cadastro de Notes" //"Cadastro de Notes"
 
     WSMETHOD POST Main ;
     DESCRIPTION "Cadastra um novo Prospesct" ;
-    WSSYNTAX "/crm/Notes/{Order, Page, PageSize, Fields}" ;
+    WSSYNTAX "/crm/Notes/{Fields}" ;
     PATH "/crm/notes"
 
 	WSMETHOD GET Code ;
@@ -38,12 +38,12 @@ WSRESTFUL Notes DESCRIPTION "Cadastro de Notes" //"Cadastro de Notes"
 
 	WSMETHOD PUT Code ;
     DESCRIPTION "Altera um Note específico" ;
-    WSSYNTAX "/crm/Notes/{Code}/{Order, Page, PageSize, Fields}" ;
+    WSSYNTAX "/crm/Notes/{Code}/{Fields}" ;
     PATH "/crm/notes/{Code}"	
 
 	WSMETHOD DELETE Code ;
     DESCRIPTION "Deleta um Note específico" ;
-    WSSYNTAX "/crm/Notes/{Code}/{Order, Page, PageSize, Fields}" ;
+    WSSYNTAX "/crm/Notes/{Code}" ;
     PATH "/crm/notes/{Code}"		
 
 ENDWSRESTFUL
@@ -372,7 +372,9 @@ Static Function ManutNote(oApiManager, aQueryString, nOpc, aJson, cChave, cBody)
 				aMsgErro := oModel:GetErrorMessage()
 				cResp	 := ""
 				For nX := 1 To Len(aMsgErro)
-					cResp += StrTran( StrTran( aMsgErro[nX], "<", "" ), "-", "" ) + (" ") 
+					If ValType(aMsgErro[nX]) == "C"
+						cResp += StrTran( StrTran( aMsgErro[nX], "<", "" ), "-", "" ) + (" ") 
+					EndIf
 				Next nX	
 				lRet := .F.
 				oApiManager:SetJsonError("400","Erro durante Inclusão/Alteração/Exclusão do Note!.", cResp,/*cHelpUrl*/,/*aDetails*/)
@@ -443,7 +445,7 @@ Static Function ApiMap()
 								{"Description"					, "AOB_TITULO"									},;
 								{"ResourceType"					, "AOB_ENTIDA"									},;
 								{"ResourceCode"					, "AOB_CHAVE"									},;
-								{"Date		"					, "AOB_DTNOTA"									},;
+								{"Date"							, "AOB_DTNOTA"									},;
 								{"Content"						, "AOB_CONTEU"									},;
 								{"Bloqued"						, "AOB_MSBLQL"									};
 							},;
