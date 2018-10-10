@@ -1166,7 +1166,7 @@ Method ToArray(cBody) Class APIManager
 
 										xVal := AjustaVar(aItensArray[nY][4], aItensArray[nY][3], xVal)
 
-										If !Empty(xVal)
+										If !Empty(xVal) .Or. (ValType(xVal) == "L")
 							
 											nPos := aScan(aItem,{|x| Upper( x[1] ) == Upper( aItensArray[nY][4] ) })
 											If nPos > 0
@@ -1195,7 +1195,7 @@ Method ToArray(cBody) Class APIManager
 							
 							xVal := AjustaVar(aAux[nX][6], aAux[nX][3], xVal)
 
-							If !Empty(xVal)
+							If !Empty(xVal) .Or. (ValType(xVal) == "L")
 								nPos := aScan(aCab,{|x| Upper( x[1] ) == Upper( aAux[nX][6] ) })
 								If nPos > 0
 									aAdd(aCab[nPos][2],{aAux[nX][3], xVal})
