@@ -1834,7 +1834,7 @@ Static Function SetJsonObject( oApiManager, aApiMap, aRelations, nPosRelation, c
 				xConteudo := ""
 				If Empty(aFields) .Or. aScan(aFields, Upper(aStruct[ASTRUCT_FIELDS][nY][ASTRUCT_FIELDAPI])) > 0
 					TrataRet(@xConteudo, cAlias, nY, aStruct)
-					If xConteudo != Nil .And. !Empty(xConteudo)
+					If xConteudo != Nil .And. (!Empty(xConteudo) .Or. ValType(xConteudo) == "L" .And. !xConteudo)
 						oItem[aStruct[ASTRUCT_FIELDS][nY][ASTRUCT_FIELDAPI]] := xConteudo
 					EndIf
 				EndIf
