@@ -1929,7 +1929,7 @@ Static Function SetJsonObject( oApiManager, aApiMap, aRelations, nPosRelation, c
 	EndDo
 
 	If nRecno == 0
-		If Len(aItensCab) > 0 .Or. oItem != Nil
+		If oItem != Nil
 			If oItem != Nil .And. nCount != oApiManager:nPageSize
 				If ValidSkip(oItem)
 					aAdd(aItensCab,oItem)
@@ -1941,11 +1941,16 @@ Static Function SetJsonObject( oApiManager, aApiMap, aRelations, nPosRelation, c
 			EndIf
 
 			oApiManager:SetJson(lHasnext, aItensCab)
-			lRet	:= .T.
-		Else
+		EndIf
+
+		If Len(aItensCab) == 0
 			oApiManager:SetJsonError("404","Registro não encontrado.","Não foi encontrado o registro especificado.",/*cHelpUrl*/,/*aDetails*/)
+		Else
+			lRet	:= .T.
 		EndIf
 	EndIf
+
+	
 
 	(cTemp)->(DBCloseArea())
 
