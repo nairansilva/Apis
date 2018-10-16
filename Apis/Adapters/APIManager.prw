@@ -1768,8 +1768,12 @@ Static Function SetJsonObject( oApiManager, aApiMap, aRelations, nPosRelation, c
 	If !Empty(cFilter)
 		cQuery 		+=  cFilter
 	EndIf
+
 	If !Empty(cIndexFather) 
+		cQuery		+= " GROUP BY " + cIndexFather + ',' + cInfoItem + ".R_E_C_N_O_"
 		cQuery 		+= " ORDER BY " + cIndexFather
+	Else
+		cQuery		+= " GROUP BY " + cInfoItem + ".R_E_C_N_O_ "
 	EndIf
 
 	//cQuery := ChangeQuery(cQuery)
